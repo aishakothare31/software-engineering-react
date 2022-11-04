@@ -1,4 +1,4 @@
-import {Tuits} from "../components/tuits";
+import {Tuits} from "../components/tuits/index";
 import {screen, render} from "@testing-library/react";
 import {HashRouter} from "react-router-dom";
 import {findAllTuits} from "../services/tuits-service";
@@ -6,22 +6,53 @@ import axios from "axios";
 
 jest.mock('axios');
 
-const MOCKED_USERS = [
-  "alice", "bob", "charlie"
-];
-
 const MOCKED_TUITS = [
-  "alice's tuit", "bob's tuit", "charlie's tuit"
+  {tuit: "NASA tuit",postedBy:'nasa', _id:"633b12c1f77b271b3fba92e7"},
+  {tuit: "hello trial",postedBy:'alice123',  _id:"6348cd2257afe6220ceba2be"},
+  {tuit: "using new post",postedBy:'ellenripley',  _id:"63629bc35eb31a7909e95da0"}
 ];
 
+// test tuit list renders static tuit array
 test('tuit list renders static tuit array', () => {
-  // TODO: implement this
+  render(
+      <HashRouter>
+        <Tuits tuits={MOCKED_TUITS}/>
+      </HashRouter>
+  );
+
+  const linkElementA = screen.getByText(/NASA tuit/i);
+  const linkElementB = screen.getByText(/hello trial/i);
+  const linkElementC = screen.getByText(/using new post/i);
+  expect(linkElementA).toBeInTheDocument();
+  expect(linkElementB).toBeInTheDocument();
+  expect(linkElementC).toBeInTheDocument();
 });
 
-test('tuit list renders async', async () => {
-  // TODO: implement this
-})
+// test tuit list renders async
+// test('tuit list renders async', async () => {
+//   const tuits = await findAllTuits();
+//   render(
+//       <HashRouter>
+//         <Tuits tuits={tuits}/>
+//       </HashRouter>
+//   );
+//   const linkElement = screen.getByText(/In 2021, our @NASAPersevere/i);
+//   const linkElementA = screen.getByText(/@SpaceX Dragon spacecraft/i);
+//   expect(linkElement).toBeInTheDocument()
+//   expect(linkElementA).toBeInTheDocument()
+// });
 
-test('tuit list renders mocked', async () => {
-  // TODO: implement this
+test('tuits list renders mocked', async () => {
+  axios.get.mockImplementation(() =>
+  Promise.resolve({ data: {tuits: MOCKED_TUITS} }));
+  const response = await findAllTuits();
+  const tuits = response.tuits
+  render(
+    <HashRouter>
+      <Tuits tuits={tuits}/>
+    </HashRouter>);
+
+  const tuit = screen.getByText(/hello/i);
+  expect(tuit).toBeInTheDocument();
 });
+

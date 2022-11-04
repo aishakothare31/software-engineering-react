@@ -7,13 +7,15 @@ import {
 describe('createUser', () => {
   // sample user to insert
   const ripley = {
+    firstName: "ellen",
+    lastName: "ripley",
     username: 'ellenripley',
     password: 'lv426',
     email: 'ellenripley@aliens.com'
   };
 
   // setup test before running test
-  beforeAll(() => {
+  beforeAll(async ()=> {
     // remove any/all users to make sure we create it in the test
     return deleteUsersByUsername(ripley.username);
   })
@@ -29,6 +31,8 @@ describe('createUser', () => {
     const newUser = await createUser(ripley);
 
     // verify inserted user's properties match parameter user
+    expect(newUser.firstName).toEqual(ripley.firstName);
+    expect(newUser.lastName).toEqual(ripley.lastName);
     expect(newUser.username).toEqual(ripley.username);
     expect(newUser.password).toEqual(ripley.password);
     expect(newUser.email).toEqual(ripley.email);
