@@ -1,7 +1,8 @@
 import axios from "axios";
-const BASE_URL = "http://my-node-express-project-env.eba-hxq4pgvm.us-east-1.elasticbeanstalk.com"
-const TUITS_API = `${BASE_URL}/api/tuits`;
-const USERS_API = `${BASE_URL}/api/users`;
+// const BASE_URL = "http://my-node-express-project-env.eba-hxq4pgvm.us-east-1.elasticbeanstalk.com"
+// const BASE_URL = "https://tuiter-node-fa22-ak.herokuapp.com"
+const TUITS_API = `https://tuiter-node-fa22-ak.herokuapp.com/tuits`;
+const USERS_API = `https://tuiter-node-fa22-ak.herokuapp.com/users`;
 
 export const findAllTuits = () =>
   axios.get(TUITS_API)
@@ -11,18 +12,32 @@ export const findTuitById = (tid) =>
   axios.get(`${TUITS_API}/${tid}`)
     .then(response => response.data);
 
-export const findTuitByUser = (uid) =>
+export const findTuitsByUser = (uid) =>
   axios.get(`${USERS_API}/${uid}/tuits`)
     .then(response => response.data);
 
-export const createTuit = (uid, tuit) =>
+export const createTuitByUser = (uid, tuit) =>
   axios.post(`${USERS_API}/${uid}/tuits`, tuit)
     .then(response => response.data);
 
+export const postTuit = () =>
+  axios.post(`${TUITS_API}`)
+    .then(response=>response.data)
+
 export const updateTuit = (tid, tuit) =>
-  axios.post(`${TUITS_API}/${tid}`, tuit)
+  axios.put(`${TUITS_API}/${tid}`, tuit)
     .then(response => response.data);
 
 export const deleteTuit = (tid) =>
   axios.delete(`${TUITS_API}/${tid}`)
     .then(response => response.data);
+
+const service = {
+  findAllTuits,
+  deleteTuit,
+  createTuitByUser,
+  findTuitById,
+  findTuitsByUser
+}
+
+export default service;
