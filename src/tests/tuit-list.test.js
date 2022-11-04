@@ -28,19 +28,6 @@ test('tuit list renders static tuit array', () => {
   expect(linkElementC).toBeInTheDocument();
 });
 
-// test tuit list renders async
-// test('tuit list renders async', async () => {
-//   const tuits = await findAllTuits();
-//   render(
-//       <HashRouter>
-//         <Tuits tuits={tuits}/>
-//       </HashRouter>
-//   );
-//   const linkElement = screen.getByText(/In 2021, our @NASAPersevere/i);
-//   const linkElementA = screen.getByText(/@SpaceX Dragon spacecraft/i);
-//   expect(linkElement).toBeInTheDocument()
-//   expect(linkElementA).toBeInTheDocument()
-// });
 
 test('tuits list renders mocked', async () => {
   axios.get.mockImplementation(() =>

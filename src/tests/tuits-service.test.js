@@ -118,14 +118,11 @@ describe('findTuitById', () => {
             return deleteTuit(tuit._id);
         }
         await deleteUsersByUsername(ripley.username);
-        // return deleteTuit(tuit._id);
-        // await deleteUsersByUsername(ripley.username);
         
     });
 
     test('can retrieve a tuit by their primary key with REST API', async () => {
         const tuitResponse = await findTuitById(tuit._id);
-        console.log(tuitResponse)
         expect(tuitResponse._id).toEqual(tuit._id);
         expect(tuitResponse.tuit).toEqual(tuitText);
         expect(tuitResponse.postedOn).toEqual("2022-11-02T11:48:48.360Z");
@@ -159,7 +156,6 @@ describe('findAllTuits', () => {
             tuit = await createTuitByUser(userId, newTuit);
             tuitIds.push(tuit._id);
         }
-        console.log(tuitIds)
     });
 
     afterEach(async () => {
@@ -172,9 +168,6 @@ describe('findAllTuits', () => {
     test('can retrieve all tuits with REST API', async () => {
         const tuitResponse = await findAllTuits();
         const textsRetreived = tuitResponse.map(tuit => tuit);
-        // for (const text of tuitTexts) {
-        //     expect(textsRetreived.includes(text)).toEqual(true);
-        // }
         expect(textsRetreived).toEqual(tuitResponse)
     });
 });
