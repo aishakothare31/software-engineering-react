@@ -1,8 +1,27 @@
-import React from "react";
+/* eslint-disable no-undef */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from "react";
 import Tuits from "../tuits";
-import {Link} from "react-router-dom";
+import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import * as service from "../../services/auth-service"
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState({});
+  useEffect(async () => {
+    try {
+      // eslint-disable-next-line no-undef
+      const user = await service.profile();
+      setProfile(user);
+    } catch (e) {
+      navigate('/login');
+    }
+  }, []);
+  const logout = () => {
+    service.logout()
+      .then(() => navigate('/login'));
+  }
+
   return(
     <div className="ttr-profile">
       <div className="border border-bottom-0">
@@ -67,6 +86,13 @@ const Profile = () => {
           </ul>
         </div>
       </div>
+      <div>
+      <h4>{profile.username}</h4>
+      <h6>@{profile.username}</h6>
+      <button onClick={logout}>
+        Logout</button>
+    </div>
+
       <Tuits/>
     </div>
   );
