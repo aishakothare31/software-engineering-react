@@ -19,6 +19,7 @@ import More from "../more";
 import {Login} from "../profile/login";
 import Movies from "../movies";
 import MovieDetails from "../movies/details";
+import Signup from "../profile/signup";
 
 function Tuiter () {
   return(
@@ -32,6 +33,7 @@ function Tuiter () {
             <Routes>
               <Route path="/" element={<Home/>}/>
               <Route path="/login" element={<Login/>}/>
+              <Route path='/signup' element={<Signup/>}></Route>
               <Route path="/tuiter" element={<Home/>}/>
               <Route path="/tuiter/:uid" element={<Home/>}/>
               <Route path="/home" element={<Home/>}/>
