@@ -15,4 +15,8 @@ export const findAllTuitsLikedByUser = (userId) =>
     api.get(`${USERS_API}/${userId}/likes`)
         .then(response => response.data);
     
-    
+export const hasUserLikedTheTuit = (uid, tid) => {
+    return api.get(`${USERS_API}/${uid}/likes/${tid}`).then((response) => {
+        return response.data?._id !== undefined;
+    });
+    };    
